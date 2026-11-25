@@ -25,7 +25,7 @@
   const embed = (sel, spec) => vegaEmbed($(sel), { $schema: "https://vega.github.io/schema/vega-lite/v6.json", config: BASE_CONFIG, ...spec },
                                         { actions: false, renderer: "canvas" });
 
-  // =============================== estado en la URL (para compartir) =================================
+  // =============================== estado en la URL ==================================================
   const URLST = {
     leer() { return new URLSearchParams(location.hash.replace(/^#/, "").includes("=") ? location.hash.slice(1) : ""); },
     escribir(obj) {
@@ -38,12 +38,6 @@
   const escribirEstado = {};   // cada sección registra cómo describirse
   let arrancando = true;
   function guardar(seccion) { if (arrancando) return; seccion = seccion.replace(/^ex-/, ""); seccionActual = seccion; URLST.escribir({ v: seccion, ...(escribirEstado[seccion] ? escribirEstado[seccion]() : {}) }); }
-  $("#compartir").addEventListener("click", async () => {
-    guardar(seccionActual);
-    try { await navigator.clipboard.writeText(location.href); } catch (e) { prompt("Copiá este link:", location.href); }
-    const b = $("#compartir"); b.textContent = "¡Link copiado!"; b.classList.add("ok");
-    setTimeout(() => { b.textContent = "🔗 Copiar link"; b.classList.remove("ok"); }, 1800);
-  });
   // la sección visible queda marcada en el índice
   const enlaces = [...$$(".subnav a")];
   const obs = new IntersectionObserver((ents) => ents.forEach((e) => {

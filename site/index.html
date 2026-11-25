@@ -842,9 +842,6 @@ select:focus-visible { outline: 2px solid var(--f1-rojo); outline-offset: 2px; }
               border-radius: 999px; border: 1px solid transparent; }
 .explora .subnav a:hover { border-color: var(--f1-borde); background: var(--f1-panel); }
 .explora .subnav a.activo { background: var(--f1-negro); color: #fff; }
-.explora .compartir { margin-left: auto; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--f1-rojo);
-               background: var(--f1-rojo); color: #fff; font: 700 .9rem inherit; cursor: pointer; }
-.explora .compartir.ok { background: #2F855A; border-color: #2F855A; }
 .explora .records { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .explora .record { background: var(--f1-panel); border: 1px solid var(--f1-borde); border-top: 4px solid var(--f1-rojo);
             border-radius: 8px; padding: 14px 18px 14px; box-shadow: var(--f1-sombra); display: flex; flex-direction: column; gap: 6px;
@@ -976,7 +973,6 @@ select:focus-visible { outline: 2px solid var(--f1-rojo); outline-offset: 2px; }
 /* dentro de la app: el índice de esta parte en una sola fila y los selects compactos */
 .explora .subnav { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
 .explora .subnav a { flex: none; white-space: nowrap; padding: 5px 10px; }
-.explora .subnav .compartir { flex: none; white-space: nowrap; }
 .explora select { padding: 5px 8px; font-size: .92rem; min-height: 0; height: auto; line-height: 1.3; }
 .explora #ex-armar select { padding: 4px 8px; font-size: .88rem; }
 .explora .fila-filtros .campo { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -1056,13 +1052,11 @@ select:focus-visible { outline: 2px solid var(--f1-rojo); outline-offset: 2px; }
 <hr>
 <div id="explorar" class="f1-parte"><b>Explorá por tu cuenta</b><span>Recorré los datos como quieras, mirá cualquier temporada y carrera, o cambiá lo que hizo un piloto antes de largar y fijate qué predice el modelo</span></div>
 <h3 id="explora-los-datos">Explorá los datos</h3>
-<div class="explora"><p class="bajada">Más allá del modelo: los 3.792 resultados de 2018 a 2026, para recorrerlos como quieras. Todo lo que
-    armes queda en el link, así se lo podés pasar a alguien.</p>
+<div class="explora"><p class="bajada">Más allá del modelo: los 3.792 resultados de 2018 a 2026, para recorrerlos como quieras.</p>
 
   <nav class="subnav" id="ex-subnav">
     <a href="#ex-records">Récords</a><a href="#ex-pilotos">Pilotos</a><a href="#ex-armar">Armá tu gráfico</a>
     <a href="#ex-conectado">Todo conectado</a><a href="#ex-movimiento">Carrera de escuderías</a><a href="#ex-quien">¿Quién gana?</a>
-    <button class="compartir" id="ex-compartir" type="button" title="Copiar el link de lo que estoy viendo">🔗 Copiar link</button>
   </nav>
 
   <!-- 1 · récords ======================================================================== -->
@@ -2461,7 +2455,7 @@ select:focus-visible { outline: 2px solid var(--f1-rojo); outline-offset: 2px; }
   const embed = (sel, spec) => vegaEmbed($(sel), { $schema: "https://vega.github.io/schema/vega-lite/v6.json", config: BASE_CONFIG, ...spec },
                                         { actions: false, renderer: "canvas" });
 
-  // =============================== estado en la URL (para compartir) =================================
+  // =============================== estado en la URL ==================================================
   const URLST = {
     leer() { return new URLSearchParams(location.hash.replace(/^#/, "").includes("=") ? location.hash.slice(1) : ""); },
     escribir(obj) {
@@ -2474,12 +2468,6 @@ select:focus-visible { outline: 2px solid var(--f1-rojo); outline-offset: 2px; }
   const escribirEstado = {};   // cada sección registra cómo describirse
   let arrancando = true;
   function guardar(seccion) { if (arrancando) return; seccion = seccion.replace(/^ex-/, ""); seccionActual = seccion; URLST.escribir({ v: seccion, ...(escribirEstado[seccion] ? escribirEstado[seccion]() : {}) }); }
-  $("#compartir").addEventListener("click", async () => {
-    guardar(seccionActual);
-    try { await navigator.clipboard.writeText(location.href); } catch (e) { prompt("Copiá este link:", location.href); }
-    const b = $("#compartir"); b.textContent = "¡Link copiado!"; b.classList.add("ok");
-    setTimeout(() => { b.textContent = "🔗 Copiar link"; b.classList.remove("ok"); }, 1800);
-  });
   // la sección visible queda marcada en el índice
   const enlaces = [...$$(".subnav a")];
   const obs = new IntersectionObserver((ents) => ents.forEach((e) => {

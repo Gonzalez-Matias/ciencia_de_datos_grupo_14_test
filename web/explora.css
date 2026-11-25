@@ -62,9 +62,6 @@
               border-radius: 999px; border: 1px solid transparent; }
 .explora .subnav a:hover { border-color: var(--f1-borde); background: var(--f1-panel); }
 .explora .subnav a.activo { background: var(--f1-negro); color: #fff; }
-.explora .compartir { margin-left: auto; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--f1-rojo);
-               background: var(--f1-rojo); color: #fff; font: 700 .9rem inherit; cursor: pointer; }
-.explora .compartir.ok { background: #2F855A; border-color: #2F855A; }
 .explora .records { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .explora .record { background: var(--f1-panel); border: 1px solid var(--f1-borde); border-top: 4px solid var(--f1-rojo);
             border-radius: 8px; padding: 14px 18px 14px; box-shadow: var(--f1-sombra); display: flex; flex-direction: column; gap: 6px;
@@ -196,7 +193,6 @@
 /* dentro de la app: el índice de esta parte en una sola fila y los selects compactos */
 .explora .subnav { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
 .explora .subnav a { flex: none; white-space: nowrap; padding: 5px 10px; }
-.explora .subnav .compartir { flex: none; white-space: nowrap; }
 .explora select { padding: 5px 8px; font-size: .92rem; min-height: 0; height: auto; line-height: 1.3; }
 .explora #ex-armar select { padding: 4px 8px; font-size: .88rem; }
 .explora .fila-filtros .campo { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
