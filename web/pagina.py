@@ -1188,12 +1188,16 @@ def generar(destino: Path = SITIO) -> Path:
         f"<script>{en_script((ASSETS / 'vendor' / nombre).read_text(encoding='utf-8'))}</script>\n"
         for nombre in LIBRERIAS)
     leer_web = lambda nombre: (WEB / nombre).read_text(encoding="utf-8")  # noqa: E731
+    # va adentro de la página (como todo): la app es un solo index.html
+    favicon = "data:image/svg+xml;base64," + base64.b64encode((ASSETS / "favicon.svg").read_bytes()).decode()
     pagina = f"""<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>F1 – Grupo 14</title>
+<!-- ícono de la pestaña: el logo de F1 del encabezado, en blanco sobre rojo (assets/favicon.svg) -->
+<link rel="icon" type="image/svg+xml" href="{favicon}">
 <!-- Generado por build_app.py (web/pagina.py). No editar a mano: correr `python build_app.py`. -->
 <!-- La tipografía es lo único que se pide a internet; sin conexión se usa la del sistema. -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
